@@ -1,5 +1,5 @@
 # SATT
-Proyecto de Arquisoft Uniandes. 2016-01
+Proyecto de Arquitectura de Software Uniandes. 2016-01
 
 ##Integrantes
 
