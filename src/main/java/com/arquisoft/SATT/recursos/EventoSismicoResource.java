@@ -13,8 +13,8 @@ public class EventoSismicoResource {
 
     @POST 
     @Produces(MediaType.APPLICATION_JSON)
-//    public Response createEventoSismico() {
+    public Response createEventoSismico() {
     	
-//        return buildResponse();
-//    }
+        return buildResponse();
+    }
 }
