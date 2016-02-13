@@ -125,6 +125,11 @@ public class EventoSismicoDAO {
 
 	//TODO Soto hace este metodo
 	private SensorDTO buscarSensorMasCercano(long lat, long lng, List<Object> sensores) {
+		for (Object object : sensores) {
+			SensorDTO actual = (SensorDTO) object;
+			
+			
+		}
 		return null;
 		
 	}
