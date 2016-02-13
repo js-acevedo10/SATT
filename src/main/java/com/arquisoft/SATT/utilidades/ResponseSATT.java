@@ -14,7 +14,7 @@ import com.google.gson.Gson;
  * vamos a tener o no que separar los métodos y los headers.
  * @author JuanSantiagoAcev
  */
-public class ResponseCaptain {
+public class ResponseSATT {
 
 	/**
 	 * El asterisco significa que el reques puede venir de cualquier url, se reemplaza por una url en específico

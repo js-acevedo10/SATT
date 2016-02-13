@@ -12,6 +12,8 @@ public class EventoSismicoDTO {
 	
 	private ObjectId _id;
 	
+	private String id;
+
 	private long lat;
 	
 	private long lng;
@@ -59,5 +61,13 @@ public class EventoSismicoDTO {
 
 	public void setDistancia(double distancia) {
 		this.distancia = distancia;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

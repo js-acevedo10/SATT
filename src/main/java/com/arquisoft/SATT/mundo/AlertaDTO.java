@@ -8,31 +8,31 @@ import org.bson.types.ObjectId;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SensorDTO {
+public class AlertaDTO {
 	
 	private ObjectId _id;
 	
 	private String id;
-
-	private long lat;
 	
-	private long lng;
+	private String perfil;
+	
+	private String zona;
+	
+	private long tLlegada;
 	
 	private double altura;
 	
-	private double velocidad;
-	
-	public SensorDTO(){
+	public AlertaDTO(){
 		
 	}
 
-	public SensorDTO(ObjectId _id, long lat, long lng, double altura, double velocidad) {
+	public AlertaDTO(ObjectId _id, String perfil, String zona, long tLlegada, double altura) {
 		super();
 		this._id = _id;
-		this.lat = lat;
-		this.lng = lng;
+		this.perfil = perfil;
+		this.zona = zona;
+		this.tLlegada = tLlegada;
 		this.altura = altura;
-		this.velocidad = velocidad;
 	}
 
 	public ObjectId get_id() {
@@ -51,20 +51,28 @@ public class SensorDTO {
 		this.id = id;
 	}
 
-	public long getLat() {
-		return lat;
+	public String getPerfil() {
+		return perfil;
 	}
 
-	public void setLat(long lat) {
-		this.lat = lat;
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
-	public long getLng() {
-		return lng;
+	public String getZona() {
+		return zona;
 	}
 
-	public void setLng(long lng) {
-		this.lng = lng;
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public long gettLlegada() {
+		return tLlegada;
+	}
+
+	public void settLlegada(long tLlegada) {
+		this.tLlegada = tLlegada;
 	}
 
 	public double getAltura() {
@@ -75,11 +83,4 @@ public class SensorDTO {
 		this.altura = altura;
 	}
 
-	public double getVelocidad() {
-		return velocidad;
-	}
-
-	public void setVelocidad(double velocidad) {
-		this.velocidad = velocidad;
-	}
 }

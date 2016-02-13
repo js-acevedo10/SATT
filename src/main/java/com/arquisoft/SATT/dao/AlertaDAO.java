@@ -8,8 +8,6 @@ import javax.ws.rs.core.Response;
 import org.bson.Document;
 
 import com.arquisoft.SATT.mundo.AlertaDTO;
-import com.arquisoft.SATT.mundo.EventoSismicoDTO;
-import com.arquisoft.SATT.mundo.SensorDTO;
 import com.arquisoft.SATT.utilidades.KeyValueSearch;
 import com.arquisoft.SATT.utilidades.MongoConnection;
 import com.arquisoft.SATT.utilidades.MongoManager;
@@ -22,11 +20,11 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.util.JSON;
 
-public class EventoSismicoDAO {
+public class AlertaDAO {
 	
 	private static String json;
 	
-	private static final String COLECCION = "eventos";
+	private static final String COLECCION = "alertas";
 	
 	public static ArrayList<Document> documentos = new ArrayList<Document>();
 	
@@ -34,7 +32,7 @@ public class EventoSismicoDAO {
 	//GET
 	//----------------------------------------------------------------------
 
-	public Response getAllEventos() {
+	public Response getAllAlertas() {
 		json = "";
 		documentos = new ArrayList<Document>();		
 		MongoConnection connection = SATTDB.requestConecction();
@@ -48,7 +46,7 @@ public class EventoSismicoDAO {
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
-			json = "{\"exception\":\"Error Fetching Eventos Collection.\"}";
+			json = "{\"exception\":\"Error Fetching Alertas Collection.\"}";
 		}
 		
 		return ResponseSATT.buildResponse(json);
@@ -58,75 +56,27 @@ public class EventoSismicoDAO {
 	//POST
 	//----------------------------------------------------------------------
 	
-	/**
-	 * Metodo que ejecuta la logica de negocio una vez se recibe el evento sismico
-	 * @param evento Evento sismico que desencadena la creacion de una alerta
-	 * @return Respuesta
-	 */
-	public Response addEvento(EventoSismicoDTO evento) {
-		
-		/////////////////////////////////
-		//Persistencia del evento sismico
-		/////////////////////////////////
-		
+	public Response addAlerta(AlertaDTO alerta) {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
-		json = gson.toJson(evento);
+		json = gson.toJson(alerta);
 		try {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
 				@Override
 				public void query(MongoManager manager) {
-					Document eventoDoc = Document.parse(json);
-					if(manager.persist(eventoDoc, COLECCION)) {
-						json = eventoDoc.toJson();
+					Document alertaDoc = Document.parse(json);
+					if(manager.persist(alertaDoc, COLECCION)) {
+						json = alertaDoc.toJson();
 					} else {
-						json = "{\"exception\":\"Evento not added.\"}";
+						json = "{\"exception\":\"Alerta not added.\"}";
 					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
-			json = "{\"exception\":\"Error Fetching Eventos Collection.\"}";
+			json = "{\"exception\":\"Error Fetching Alertas Collection.\"}";
 		}
-		
-		/////////////////////////////////
-		//Buscar sensor mas cercano
-		/////////////////////////////////
-		List<Object> sensores = SensorDAO.getListSensores();
-		SensorDTO s = buscarSensorMasCercano( evento.getLat(), evento.getLng(), sensores );
-		
-		
-		/////////////////////////////////
-		//Buscar zona correspondiente al sensor mas cercano
-		/////////////////////////////////
-		
-		String zona;
-		//TODO Juancho hace este metodo
-
-		
-		/////////////////////////////////
-		//Comparar datos con Escenario Premodelado
-		/////////////////////////////////		
-		
-		Double altura = s.getAltura();
-		Double tiempo = evento.getDistancia() / s.getVelocidad();
-		String perfil;
-		//TODO Soto hace este metodo
-		
-		/////////////////////////////////
-		//Crear Alerta, persistirla y retornarla
-		/////////////////////////////////	
-		
-		AlertaDTO alerta;
-		//TODO Soto hace este metodo
-		
 		return ResponseSATT.buildResponse(json);
-	}
-
-	//TODO Soto hace este metodo
-	private SensorDTO buscarSensorMasCercano(long lat, long lng, List<Object> sensores) {
-		return null;
-		
 	}
 
 }
