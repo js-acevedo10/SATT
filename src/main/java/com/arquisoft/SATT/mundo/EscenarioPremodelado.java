@@ -1,6 +1,5 @@
 package com.arquisoft.SATT.mundo;
 
-import org.bson.types.ObjectId;
 
 public class EscenarioPremodelado {
 	
@@ -17,7 +16,7 @@ public class EscenarioPremodelado {
 			perfilString = s;
 		}
 		
-		String string(){return perfilString;}
+		public String string(){return perfilString;}
 		
 	}
 

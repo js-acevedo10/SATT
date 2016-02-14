@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -15,8 +17,10 @@ import com.arquisoft.SATT.utilidades.KeyValueSearch.SearchType;
 
 public class MongoManager {
 
-	private static final String DBNAME = "satt";
+	private static final String DBURI = "mongodb://arquimasterdb:arquisoft@ds059365.mongolab.com:59365/satt";
+
 	private MongoClient mongo = null;
+	private MongoClientURI URI = null;
 	//METODOS
 
 	/**
@@ -24,8 +28,11 @@ public class MongoManager {
 	 * @return La base de datos en Mongo para buscar.
 	 */
 	private MongoDatabase initMongoDB(){
-		if (mongo==null) mongo = new MongoClient();
-		MongoDatabase db = mongo.getDatabase(DBNAME);
+		if (mongo==null || URI == null){ 
+			URI  = new MongoClientURI(DBURI); 
+			mongo = new MongoClient(URI);
+		}
+		MongoDatabase db = mongo.getDatabase(URI.getDatabase());
 		return db;
 	}
 
