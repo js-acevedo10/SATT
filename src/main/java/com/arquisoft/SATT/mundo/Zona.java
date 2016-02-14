@@ -18,8 +18,7 @@ public enum Zona {
 		this.nombre = nombre;
 	}
 	
-	public String string(){
+	public String getNombre(){
 		return nombre;
 	}
-
 }

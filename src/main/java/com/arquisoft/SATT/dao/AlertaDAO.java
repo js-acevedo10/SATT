@@ -1,23 +1,18 @@
 package com.arquisoft.SATT.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 
 import com.arquisoft.SATT.mundo.AlertaDTO;
-import com.arquisoft.SATT.utilidades.KeyValueSearch;
 import com.arquisoft.SATT.utilidades.MongoConnection;
 import com.arquisoft.SATT.utilidades.MongoManager;
 import com.arquisoft.SATT.utilidades.ResponseSATT;
 import com.arquisoft.SATT.utilidades.SATTDB;
-import com.arquisoft.SATT.utilidades.KeyValueSearch.SearchType;
 import com.arquisoft.SATT.utilidades.MongoConnection.MongoQuery;
 import com.google.gson.Gson;
-import com.mongodb.Block;
-import com.mongodb.client.FindIterable;
 import com.mongodb.util.JSON;
 
 public class AlertaDAO {

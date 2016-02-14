@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;

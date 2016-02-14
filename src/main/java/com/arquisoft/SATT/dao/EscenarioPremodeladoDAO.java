@@ -90,7 +90,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Guajira.string());
+							modelo.append("zona", Zona.Guajira.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -137,7 +137,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Magdalena.string());
+							modelo.append("zona", Zona.Magdalena.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -184,7 +184,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Sucre.string());
+							modelo.append("zona", Zona.Sucre.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -231,7 +231,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Cordoba.string());
+							modelo.append("zona", Zona.Cordoba.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -278,7 +278,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Antioquia.string());
+							modelo.append("zona", Zona.Antioquia.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -325,7 +325,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Choco.string());
+							modelo.append("zona", Zona.Choco.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -372,7 +372,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Valle.string());
+							modelo.append("zona", Zona.Valle.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -419,7 +419,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Cauca.string());
+							modelo.append("zona", Zona.Cauca.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -466,7 +466,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
 							
 							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Narino.string());
+							modelo.append("zona", Zona.Narino.getNombre());
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
