@@ -16,7 +16,7 @@ import com.arquisoft.SATT.utilidades.KeyValueSearch.SearchType;
 
 public class MongoManager {
 
-	private static final String DBURI = "mongodb://arquimasterdb:arquisoft@ds059365.mongolab.com:59365/satt";
+	private static final String DBURI = System.getenv("PROD_MONGODB");
 
 	private MongoClient mongo = null;
 	private MongoClientURI URI = null;
