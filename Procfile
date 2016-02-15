@@ -1,1 +1,1 @@
-web:    java -cp target/dependency/*:target/classes com.uniandes.SATT.Main
+web:    java -cp target/dependency/*:target/classes com.arquisoft.SATT.Main
