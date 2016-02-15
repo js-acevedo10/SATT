@@ -51,7 +51,7 @@ public class AlertaDAO {
 	//POST
 	//----------------------------------------------------------------------
 	
-	public Response addAlerta(AlertaDTO alerta) {
+	public static Response addAlerta(AlertaDTO alerta) {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
 		json = gson.toJson(alerta);

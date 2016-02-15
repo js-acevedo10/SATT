@@ -106,14 +106,16 @@ public class EventoSismicoDAO {
 		
 		Double altura = s.getAltura();
 		Double distancia = Math.abs(evento.getDistancia()-GeoAsistant.getDistanceBetween(evento.getLat(), evento.getLng(), s.getLat(), s.getLng()));
-		Double tiempo =  distancia/ s.getVelocidad();
+		Long tiempo =  (long) ((distancia/ s.getVelocidad())*3600*1000);
 		String perfil = EscenarioPremodeladoDAO.getPerfilAlerta(altura, distancia, zona);
 		//TODO Soto hace este metodo
 		AlertaDTO alerta = new AlertaDTO();
 		alerta.setAltura(altura);
 		alerta.setPerfil(perfil);
-//		alerta.settLlegada(tiempo);
+		alerta.settLlegada(tiempo);
 		alerta.setZona(zona);
+		
+		return AlertaDAO.addAlerta(alerta);
 
 		/////////////////////////////////
 		//Crear Alerta, persistirla y retornarla
@@ -121,7 +123,7 @@ public class EventoSismicoDAO {
 		
 		//TODO Soto hace este metodo
 		
-		return ResponseSATT.buildResponse(json);
+//		return ResponseSATT.buildResponse(json);
 	}
 
 	//TODO Soto hace este metodo
