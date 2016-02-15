@@ -109,12 +109,16 @@ public class EventoSismicoDAO {
 		Double tiempo =  distancia/ s.getVelocidad();
 		String perfil = EscenarioPremodeladoDAO.getPerfilAlerta(altura, distancia, zona);
 		//TODO Soto hace este metodo
-		
+		AlertaDTO alerta = new AlertaDTO();
+		alerta.setAltura(altura);
+		alerta.setPerfil(perfil);
+//		alerta.settLlegada(tiempo);
+		alerta.setZona(zona);
+
 		/////////////////////////////////
 		//Crear Alerta, persistirla y retornarla
 		/////////////////////////////////	
 		
-		AlertaDTO alerta;
 		//TODO Soto hace este metodo
 		
 		return ResponseSATT.buildResponse(json);
