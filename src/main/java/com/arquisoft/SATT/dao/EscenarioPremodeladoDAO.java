@@ -130,7 +130,7 @@ public class EscenarioPremodeladoDAO {
 
 							PerfilAlerta perfil = perfiles.poll();
 
-							Document modelo = new Document("perfil",perfil.string());
+							Document modelo = new Document("perfil",perfil.getName());
 							modelo.append("zona", zona);
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
@@ -145,7 +145,7 @@ public class EscenarioPremodeladoDAO {
 
 						PerfilAlerta perfil = perfiles.poll();
 
-						Document modelo = new Document("perfil",perfil.string());
+						Document modelo = new Document("perfil",perfil.getName());
 						modelo.append("zona", zona);
 						modelo.append("altura_min", aMin);
 						modelo.append("altura_max", alturaMax);
@@ -179,7 +179,7 @@ public class EscenarioPremodeladoDAO {
 
 						PerfilAlerta perfil = perfiles.poll();
 
-						Document modelo = new Document("perfil",perfil.string());
+						Document modelo = new Document("perfil",perfil.getName());
 						modelo.append("zona", zona);
 						modelo.append("altura_min", aMin);
 						modelo.append("altura_max", aMax);
@@ -196,7 +196,7 @@ public class EscenarioPremodeladoDAO {
 
 					PerfilAlerta perfil = perfiles.poll();
 
-					Document modelo = new Document("perfil",perfil.string());
+					Document modelo = new Document("perfil",perfil.getName());
 					modelo.append("zona", zona);
 					modelo.append("altura_min", aMin);
 					modelo.append("altura_max", alturaMax);

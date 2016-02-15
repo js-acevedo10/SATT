@@ -8,6 +8,8 @@ import javax.ws.rs.core.Response;
 import org.bson.Document;
 
 import com.arquisoft.SATT.mundo.AlertaDTO;
+import com.arquisoft.SATT.mundo.ControlAlarmas;
+import com.arquisoft.SATT.mundo.EscenarioPremodelado.PerfilAlerta;
 import com.arquisoft.SATT.mundo.EventoSismicoDTO;
 import com.arquisoft.SATT.mundo.SensorDTO;
 import com.arquisoft.SATT.utilidades.GeoAsistant;
@@ -111,14 +113,21 @@ public class EventoSismicoDAO {
 		Double distancia = Math.abs(evento.getDistancia()-GeoAsistant.getDistanceBetween(evento.getLat(), evento.getLng(), s.getLat(), s.getLng()));
 		Long tiempo =  (long) ((distancia/ s.getVelocidad())*3600*1000);
 		String perfil = EscenarioPremodeladoDAO.getPerfilAlerta(altura, distancia, zona);
-		//TODO Soto hace este metodo
+		
 		AlertaDTO alerta = new AlertaDTO();
 		alerta.setAltura(altura);
 		alerta.setPerfil(perfil);
 		alerta.settLlegada(tiempo);
 		alerta.setZona(zona);
 		
-		return AlertaDAO.addAlerta(alerta);
+		AlertaDTO alertaSaved = AlertaDAO.addAlerta(alerta);
+		
+		if (perfil.equals(PerfilAlerta.alarma.getName())){
+			Thread nuevaAlerta = new Thread(new ControlAlarmas(s.getId(), alertaSaved.getId(), s.getAltura(), distancia, zona));
+			nuevaAlerta.start();
+		}
+		
+		return ResponseSATT.buildResponse(new Gson().toJson(alertaSaved));
 
 		/////////////////////////////////
 		//Crear Alerta, persistirla y retornarla

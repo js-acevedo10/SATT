@@ -14,9 +14,9 @@ public class SensorDTO {
 	
 	private String id;
 
-	private long lat;
+	private double lat;
 	
-	private long lng;
+	private double lng;
 	
 	private double altura;
 	
@@ -26,7 +26,7 @@ public class SensorDTO {
 		
 	}
 
-	public SensorDTO(ObjectId _id, long lat, long lng, double altura, double velocidad) {
+	public SensorDTO(ObjectId _id, double lat, double lng, double altura, double velocidad) {
 		super();
 		this._id = _id;
 		this.lat = lat;
@@ -51,7 +51,7 @@ public class SensorDTO {
 		this.id = id;
 	}
 
-	public long getLat() {
+	public double getLat() {
 		return lat;
 	}
 
@@ -59,7 +59,7 @@ public class SensorDTO {
 		this.lat = lat;
 	}
 
-	public long getLng() {
+	public double getLng() {
 		return lng;
 	}
 

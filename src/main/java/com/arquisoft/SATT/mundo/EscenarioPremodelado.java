@@ -16,7 +16,7 @@ public class EscenarioPremodelado {
 			perfilString = s;
 		}
 		
-		public String string(){return perfilString;}
+		public String getName(){return perfilString;}
 		
 	}
 
