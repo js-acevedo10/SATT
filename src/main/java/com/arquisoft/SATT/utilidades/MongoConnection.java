@@ -2,6 +2,8 @@ package com.arquisoft.SATT.utilidades;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
+import com.sun.jersey.server.impl.uri.rules.TerminatingRule;
+
 public class MongoConnection extends Thread implements Runnable {
 	
 	/**
@@ -57,6 +59,7 @@ public class MongoConnection extends Thread implements Runnable {
 	public void runQuery(MongoQuery block) throws Exception{
 		inactive = 0;
 		block.query(managerForQuery);
+		//terminateConnection();
 	}
 	
 	/**
@@ -98,25 +101,25 @@ public class MongoConnection extends Thread implements Runnable {
 	 * Ejecuta el Thread, el cual espera a que hayan nuevas solicitudes por un tiempo y luego se desconecta.
 	 */
 	public void run() {
-		while (connected){
-//			System.out.println("Connected");
-			while (!queryQueue.isEmpty()){
-				inactive = -1;
-				MongoBackgroudQuery query = queryQueue.poll().query;
-				query.query(managerForQuery);
-				query.ready();
-			}
-			inactive++;
-			if (inactive>=10){
-				terminateConnection();
-				return;
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				terminateConnection();
-			}
-		}
+//		while (connected){
+////			System.out.println("Connected");
+//			while (!queryQueue.isEmpty()){
+//				inactive = -1;
+//				MongoBackgroudQuery query = queryQueue.poll().query;
+//				query.query(managerForQuery);
+//				query.ready();
+//			}
+//			inactive++;
+//			if (inactive>=10){
+//				terminateConnection();
+//				return;
+//			}
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				terminateConnection();
+//			}
+//		}
 	}
 	
 	@Deprecated

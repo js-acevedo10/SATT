@@ -18,20 +18,21 @@ public class MongoManager {
 
 	private static final String DBURI = System.getenv("PROD_MONGODB");
 
-	private MongoClient mongo = null;
-	private MongoClientURI URI = null;
+	private static MongoClient mongo = null;
+	private static MongoClientURI URI = null;
+	private static MongoDatabase db = null;
 	//METODOS
 
 	/**
 	 * Inicializa la conexion con la base de datos
 	 * @return La base de datos en Mongo para buscar.
 	 */
-	private MongoDatabase initMongoDB(){
-		if (mongo==null || URI == null){ 
+	private static MongoDatabase initMongoDB(){
+		if (mongo==null || URI == null || db == null){ 
 			URI  = new MongoClientURI(DBURI); 
 			mongo = new MongoClient(URI);
+			db = mongo.getDatabase(URI.getDatabase());
 		}
-		MongoDatabase db = mongo.getDatabase(URI.getDatabase());
 		return db;
 	}
 
@@ -569,6 +570,8 @@ public class MongoManager {
 	 */
 	public void finalize(){
 		mongo.close();
+		mongo = null;
+		URI = null;
 	}
 
 
