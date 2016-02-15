@@ -14,9 +14,9 @@ public class EventoSismicoDTO {
 	
 	private String id;
 
-	private long lat;
+	private double lat;
 	
-	private long lng;
+	private double lng;
 	
 	private double distancia;
 
@@ -24,7 +24,7 @@ public class EventoSismicoDTO {
 		
 	}
 	
-	public EventoSismicoDTO(ObjectId id, long lat, long lng, double distancia ){
+	public EventoSismicoDTO(ObjectId id, double lat, double lng, double distancia ){
 		this._id = id;
 		this.lat = lat;
 		this.lng = lng;
@@ -39,19 +39,19 @@ public class EventoSismicoDTO {
 		this._id = _id;
 	}
 
-	public long getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(long lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
-	public long getLng() {
+	public double getLng() {
 		return lng;
 	}
 
-	public void setLng(long lng) {
+	public void setLng(double lng) {
 		this.lng = lng;
 	}
 	

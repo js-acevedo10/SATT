@@ -22,10 +22,6 @@ public class GeoAsistant {
 		return R * c;
 	}
 	
-	public static void loadPuntosCardinales() {
-		
-	}
-	
 	public static Zona getLocationZona(double lat, double lng) {
 		return Zona.Antioquia;
 	}

@@ -91,16 +91,14 @@ public class EventoSismicoDAO {
 		//Buscar sensor mas cercano
 		/////////////////////////////////
 		List<Object> sensores = SensorDAO.getListSensores();
-		SensorDTO s = buscarSensorMasCercano( evento.getLat(), evento.getLng(), sensores );
+		SensorDTO s = buscarSensorMasCercano(evento.getLat(), evento.getLng(), sensores );
 		
 		
 		/////////////////////////////////
 		//Buscar zona correspondiente al sensor mas cercano
 		/////////////////////////////////
 		
-		String zona = "";
-		//TODO Juancho hace este metodo
-
+		String zona = ZoneFinderDAO.getZonaDeEvento(evento);
 		
 		/////////////////////////////////
 		//Comparar datos con Escenario Premodelado
@@ -123,7 +121,7 @@ public class EventoSismicoDAO {
 	}
 
 	//TODO Soto hace este metodo
-	private SensorDTO buscarSensorMasCercano(long lat, long lng, List<Object> sensores) {
+	private SensorDTO buscarSensorMasCercano(double lat, double lng, List<Object> sensores) {
 		SensorDTO sensorCercano = null;
 		double distanciaMinima = Double.MAX_VALUE;
 		for (Object object : sensores) {
@@ -135,7 +133,6 @@ public class EventoSismicoDAO {
 			}
 		}
 		return sensorCercano;
-		
 	}
 
 }
