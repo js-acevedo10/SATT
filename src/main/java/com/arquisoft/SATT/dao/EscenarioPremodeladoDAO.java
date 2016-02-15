@@ -79,11 +79,11 @@ public class EscenarioPremodeladoDAO {
 		if(seleccion == i){
 			i =0;
 			for (; i < zonasPosibles.length; i++) {
-				generarPremodeladoZona(zonasPosibles[i].string());
+				generarPremodeladoZona(zonasPosibles[i].getNombre());
 			}
 		}
 		else{
-			generarPremodeladoZona(zonasPosibles[seleccion].string());
+			generarPremodeladoZona(zonasPosibles[seleccion].getNombre());
 		}
 
 	}
@@ -91,106 +91,6 @@ public class EscenarioPremodeladoDAO {
 	private static void generarPremodeladoZona(String zona){
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
-<<<<<<< Updated upstream
-			////////////////////////////////////
-			//GUAJIRA
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Guajira.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Magdalena
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Magdalena.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Sucre
-			////////////////////////////////////
-=======
->>>>>>> Stashed changes
 			connection.runQuery(new MongoQuery() {
 				double alturaMax = 20.0;
 				double distanciaMinima = 5.0;
@@ -209,237 +109,9 @@ public class EscenarioPremodeladoDAO {
 						perfiles.offer(PerfilAlerta.alerta);
 						perfiles.offer(PerfilAlerta.alarma);
 						
-<<<<<<< Updated upstream
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Sucre.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Córdoba
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Cordoba.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Antioquia
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Antioquia.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Chocó
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Choco.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Valle del Cauca
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-						double dMax = distancia;
-						double deltaDistancia = (Math.random()*2000) + 1;
-						double dMin = distancia - deltaDistancia;
-						if (dMin <= distanciaMinima){
-							dMin = distanciaMinima+1;
-						}
-						distancia = dMin - 1;
-						//Hasta acá el rango de distancia está definido por [dMin, dMax]
-						//Distancia es el límite superior en la próxima iteración
-						
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Valle.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-					}
-				}
-			});
-			////////////////////////////////////
-			//Cauca
-			////////////////////////////////////
-			connection.runQuery(new MongoQuery() {
-				int alturaMax = 20;
-				int distanciaMinima = 5;
-				@Override
-				public void query(MongoManager manager) {
-					PerfilAlerta[] perfiles = {PerfilAlerta.precaucion, PerfilAlerta.informativo, PerfilAlerta.alerta
-							, PerfilAlerta.alarma};
-					double altura = 0;
-					double distancia = 10000;
-					while (distancia>distanciaMinima){
-=======
 						altura = 0;
 						alturas = 0;
 
->>>>>>> Stashed changes
 						double dMax = distancia;
 						double deltaDistancia = (Math.random()*2000) + 1;
 						double dMin = distancia - deltaDistancia;
@@ -459,11 +131,7 @@ public class EscenarioPremodeladoDAO {
 							PerfilAlerta perfil = perfiles.poll();
 
 							Document modelo = new Document("perfil",perfil.string());
-<<<<<<< Updated upstream
-							modelo.append("zona", Zona.Cauca.getNombre());
-=======
 							modelo.append("zona", zona);
->>>>>>> Stashed changes
 							modelo.append("altura_min", aMin);
 							modelo.append("altura_max", aMax);
 							modelo.append("distancia_min", dMin);
@@ -519,34 +187,10 @@ public class EscenarioPremodeladoDAO {
 						modelo.append("distancia_max", dMax);
 						manager.persist(modelo, COLECCION);
 						
-<<<<<<< Updated upstream
-						while (altura<alturaMax){
-							double aMin = altura;
-							double deltaAltura = (Math.random()*2) + 1;
-							double aMax = altura + deltaAltura;
-							if (aMax >= alturaMax){
-								aMax = alturaMax-1;
-							}
-							altura = aMax+1;
-							//Hasta acá tenemos el perfil que define el rango [dMin, dMax];[aMin, aMax];
-							
-							PerfilAlerta perfil = perfiles[(int)(Math.random()*5)];
-							
-							Document modelo = new Document("perfil",perfil.string());
-							modelo.append("zona", Zona.Narino.getNombre());
-							modelo.append("altura_min", aMin);
-							modelo.append("altura_max", aMax);
-							modelo.append("distancia_min", dMin);
-							modelo.append("distancia_max", dMax);
-							manager.persist(modelo, COLECCION);
-							
-						}
-=======
 //						System.out.println(perfil.string()+" "+zona+" "+aMin+" "+aMax+" "+distanciaMinima+" "+dMax);
 
 
 						alturas++;
->>>>>>> Stashed changes
 					}
 					double aMin = altura;
 
