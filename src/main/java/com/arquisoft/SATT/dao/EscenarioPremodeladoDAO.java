@@ -22,7 +22,7 @@ public class EscenarioPremodeladoDAO {
 	private static String COLECCION = "escenariosPremodelados";
 	private static String perfil = "";
 
-	public static String getPerfilAlerta(double altura, double distancia, String zona){ 
+	public static String getPerfilAlerta(final double altura, final double distancia, final String zona){ 
 
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
@@ -88,7 +88,7 @@ public class EscenarioPremodeladoDAO {
 
 	}
 	
-	private static void generarPremodeladoZona(String zona){
+	private static void generarPremodeladoZona(final String zona){
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
 			connection.runQuery(new MongoQuery() {
