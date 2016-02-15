@@ -19,8 +19,5 @@ public class Main {
         SelectorThread threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
 //        ZoneFinderDAO.loadPuntosCardinales();
         System.out.println(String.format("Jersey started with WADL available at %sapplication.wadl.",baseUri, baseUri));
-        System.out.println("Press enter to stop server...");
-        System.in.read();
-        threadSelector.stopEndpoint();
 	}
 }
