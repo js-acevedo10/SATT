@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class PuntoCardinal {
 	
-	public ArrayList<String> nombreZona;
+	public ArrayList<Zona> nombreZona;
 	public double latitud;
 	public double longitud;
 	
 	public PuntoCardinal(String nombreZona1, String nombreZona2, double latitud, double longitud) {
 		super();
-		nombreZona = new ArrayList<String>();
-		this.nombreZona.add(nombreZona1);
-		if(nombreZona2 != null) {this.nombreZona.add(nombreZona2);}
+		nombreZona = new ArrayList<Zona>();
+		this.nombreZona.add(Zona.valueOf(nombreZona1));
+		if(nombreZona2 != null) {this.nombreZona.add(Zona.valueOf(nombreZona2));}
 		this.latitud = latitud;
 		this.longitud = longitud;
 	}
 
-	public ArrayList<String> getNombreZona() {
+	public ArrayList<Zona> getNombreZona() {
 		return nombreZona;
 	}
 
@@ -29,7 +29,7 @@ public class PuntoCardinal {
 		return longitud;
 	}
 
-	public void setNombreZona(ArrayList<String> nombreZona) {
+	public void setNombreZona(ArrayList<Zona> nombreZona) {
 		this.nombreZona = nombreZona;
 	}
 
