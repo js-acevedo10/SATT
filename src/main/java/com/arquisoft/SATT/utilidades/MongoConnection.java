@@ -27,7 +27,7 @@ public class MongoConnection extends Thread implements Runnable {
 	/**
 	 * Estado que mide la inactividad de la conexión.
 	 */
-	private int innacive = -1;
+	private int inactive = -1;
 	
 	/**
 	 * Constructor de la clase.
@@ -55,6 +55,7 @@ public class MongoConnection extends Thread implements Runnable {
 	 * @throws Exception - Si el bloque no puede ser ejecutado ahora mismo. 
 	 */
 	public void runQuery(MongoQuery block) throws Exception{
+		inactive = 0;
 		block.query(managerForQuery);
 	}
 	
@@ -100,13 +101,13 @@ public class MongoConnection extends Thread implements Runnable {
 		while (connected){
 //			System.out.println("Connected");
 			while (!queryQueue.isEmpty()){
-				innacive = -1;
+				inactive = -1;
 				MongoBackgroudQuery query = queryQueue.poll().query;
 				query.query(managerForQuery);
 				query.ready();
 			}
-			innacive++;
-			if (innacive>=10){
+			inactive++;
+			if (inactive>=10){
 				terminateConnection();
 				return;
 			}
