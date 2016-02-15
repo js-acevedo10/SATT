@@ -27,7 +27,7 @@ public class AlertaDAO {
 	//GET
 	//----------------------------------------------------------------------
 
-	public Response getAllAlertas() {
+	public static Response getAllAlertas() {
 		json = "";
 		documentos = new ArrayList<Document>();		
 		MongoConnection connection = SATTDB.requestConecction();

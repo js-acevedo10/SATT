@@ -15,7 +15,6 @@ import com.arquisoft.SATT.mundo.SensorDTO;
 @Path("/sensores")
 public class SensorResource {
 	
-	private SensorDAO dao;
 
 	//----------------------------------------------------------------------
 	//GET
@@ -24,7 +23,7 @@ public class SensorResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllSensores() {
-		return dao.getAllSensores();
+		return SensorDAO.getAllSensores();
 	}
 
 	//----------------------------------------------------------------------
@@ -34,7 +33,7 @@ public class SensorResource {
 	@POST 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createSensor(SensorDTO sensor) {
-		return dao.addSensor( sensor );
+		return SensorDAO.addSensor( sensor );
 	}
 	
 	//----------------------------------------------------------------------

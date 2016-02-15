@@ -32,7 +32,7 @@ public class EventoSismicoDAO {
 	//GET
 	//----------------------------------------------------------------------
 
-	public Response getAllEventos() {
+	public static Response getAllEventos() {
 		json = "";
 		documentos = new ArrayList<Document>();		
 		MongoConnection connection = SATTDB.requestConecction();
@@ -64,7 +64,7 @@ public class EventoSismicoDAO {
 	 * @param evento Evento sismico que desencadena la creacion de una alerta
 	 * @return Respuesta
 	 */
-	public Response addEvento(EventoSismicoDTO evento) {
+	public static Response addEvento(EventoSismicoDTO evento) {
 		
 		/////////////////////////////////
 		//Persistencia del evento sismico
@@ -130,7 +130,7 @@ public class EventoSismicoDAO {
 	}
 
 	//TODO Soto hace este metodo
-	private SensorDTO buscarSensorMasCercano(double lat, double lng, List<Object> sensores) {
+	private static SensorDTO buscarSensorMasCercano(double lat, double lng, List<Object> sensores) {
 		SensorDTO sensorCercano = null;
 		double distanciaMinima = Double.MAX_VALUE;
 		for (Object object : sensores) {

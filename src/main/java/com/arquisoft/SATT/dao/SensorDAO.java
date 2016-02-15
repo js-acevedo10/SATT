@@ -30,7 +30,7 @@ public class SensorDAO {
 	//GET
 	//----------------------------------------------------------------------
 
-	public Response getAllSensores() {
+	public static Response getAllSensores() {
 		json = "";
 		documentos = new ArrayList<Document>();		
 		MongoConnection connection = SATTDB.requestConecction();
@@ -75,7 +75,7 @@ public class SensorDAO {
 	//POST
 	//----------------------------------------------------------------------
 	
-	public Response addSensor(SensorDTO sensor) {
+	public static Response addSensor(SensorDTO sensor) {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
 		json = gson.toJson(sensor);

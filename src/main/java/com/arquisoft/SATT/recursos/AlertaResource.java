@@ -13,7 +13,6 @@ import com.arquisoft.SATT.dao.AlertaDAO;
 @Path("/alertas")
 public class AlertaResource {
 	
-	private AlertaDAO dao;
 
 	//----------------------------------------------------------------------
 	//GET
@@ -22,7 +21,7 @@ public class AlertaResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllAlertas() {
-		return dao.getAllAlertas();
+		return AlertaDAO.getAllAlertas();
 	}
 
 	//----------------------------------------------------------------------

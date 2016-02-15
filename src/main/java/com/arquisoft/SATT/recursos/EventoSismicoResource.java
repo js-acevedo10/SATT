@@ -14,8 +14,6 @@ import com.arquisoft.SATT.mundo.EventoSismicoDTO;
 // The Java class will be hosted at the URI path "/eventos"
 @Path("/eventos")
 public class EventoSismicoResource {
-	
-	private EventoSismicoDAO dao;
 
 	//----------------------------------------------------------------------
 	//GET
@@ -24,7 +22,7 @@ public class EventoSismicoResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllEventos() {
-		return dao.getAllEventos();
+		return EventoSismicoDAO.getAllEventos();
 	}
 
 	//----------------------------------------------------------------------
@@ -34,7 +32,7 @@ public class EventoSismicoResource {
 	@POST 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createEvento(EventoSismicoDTO evento) {
-		return dao.addEvento( evento );
+		return EventoSismicoDAO.addEvento( evento );
 	}
 	
 	//----------------------------------------------------------------------
