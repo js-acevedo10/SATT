@@ -41,7 +41,10 @@ public class EventoSismicoDAO {
 				@Override
 				public void query(MongoManager manager) {
 					documentos = manager.queryByFilters(COLECCION, null).into(new ArrayList<Document>());
-					json = JSON.serialize(documentos);
+					if (documentos!=null && !documentos.isEmpty())
+						json = JSON.serialize(documentos);
+					else
+						json = "{\"exception\":\"No eventos found.\"}";
 				}
 			});
 		} catch(Exception e) {
