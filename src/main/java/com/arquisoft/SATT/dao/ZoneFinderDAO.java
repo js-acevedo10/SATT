@@ -40,8 +40,8 @@ public class ZoneFinderDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-//		EventoSismicoDTO evento = new EventoSismicoDTO(new ObjectId(), 2.743488, -78.078211, 31.2);
-//		System.out.println("Ganador: " + getZonaDeEvento(evento));
+		EventoSismicoDTO evento = new EventoSismicoDTO(new ObjectId(), 2.743488, -78.078211, 31.2);
+		System.out.println("Ganador: " + getZonaDeEvento(evento));
 	}
 
 	public static String getZonaDeEvento(EventoSismicoDTO evento) {
