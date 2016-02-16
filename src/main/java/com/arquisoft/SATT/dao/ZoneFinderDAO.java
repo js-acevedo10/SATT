@@ -43,18 +43,25 @@ public class ZoneFinderDAO {
 
 	public static String getZonaDeEvento(EventoSismicoDTO evento) {
 		PuntoCardinalDTO pcEvento = new PuntoCardinalDTO(null, null, evento.getLat(), evento.getLng());
+		String x = null;
 		for (PuntoCardinalDTO puntoCardinal : puntosCardinales) {
 			puntoCardinal.setDistancia(GeoAsistant.getDistanceBetween(puntoCardinal.getLatitud(), puntoCardinal.getLongitud(), pcEvento.getLatitud(), pcEvento.getLongitud()));
 		}
 		Collections.sort(puntosCardinales);
 		if(puntosCardinales != null) {
-			if(pcEvento.getLatitud() <= puntosCardinales.get(0).getLatitud())
-				return puntosCardinales.get(0).getNombreZona1().getNombre();
+			if(pcEvento.getLatitud() <= puntosCardinales.get(0).getLatitud()) {
+				x = puntosCardinales.get(0).getNombreZona1().getNombre();
+				if(x == null) {
+					x = puntosCardinales.get(0).getNombreZona2().getNombre();
+				}
+			}
 			else {
-				return puntosCardinales.get(0).getNombreZona2().getNombre();
+				x =  puntosCardinales.get(0).getNombreZona2().getNombre();
+				if(x == null) {
+					x = puntosCardinales.get(0).getNombreZona1().getNombre();
+				}
 			}			
-		} else {
-			return null;
 		}
+		return x;
 	}
 }
