@@ -158,15 +158,20 @@ public class SensorDAO {
 			filters.add(new KeyValueSearch("lat", sensor.getLat(), SearchType.EQUALS));
 			filters.add(new KeyValueSearch("lng", sensor.getLng(),SearchType.EQUALS));
 			ArrayList<KeyValueUpdate> updates = new ArrayList<KeyValueUpdate>();
-			updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensor.getAltura()).append("velocidad", sensor.getVelocidad()), UpdateType.INSERT));
+			
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
 				@Override
 				public void query(MongoManager manager) {
-					if(manager.updateFirst(COLECCION, filters, updates)) {
-						json = "{\"exception\":\"Lectura added.\"}";
-					} else {
-						json = "{\"exception\":\"Lectura not added.\"}";
+					Document sensorDoc = manager.queryByFilters(COLECCION, filters).first();
+					if(sensorDoc != null) {
+						updates.add(new KeyValueUpdate("altura", sensor.getAltura(), UpdateType.SET));
+						updates.add(new KeyValueUpdate("velocidad", sensor.getVelocidad(), UpdateType.SET));
+						updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensorDoc.getString("altura")).append("velocidad", sensorDoc.getString("velocidad")), UpdateType.INSERT));
+						if(manager.updateFirst(COLECCION, filters, updates)) {
+							json = "{\"exception\":\"Lectura added.\"}";
+						}
 					}
+					json = "{\"exception\":\"Lectura not added.\"}";
 				}
 			});
 		} catch(Exception e) {
