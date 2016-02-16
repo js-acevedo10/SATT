@@ -171,9 +171,12 @@ public class SensorDAO {
 						updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensorDoc.getDouble("altura")).append("velocidad", sensorDoc.getDouble("velocidad")), UpdateType.INSERT));
 						if(manager.updateFirst(COLECCION, filters, updates)) {
 							json = "{\"exception\":\"Lectura added correctly.\"}";
+						} else {
+							json = "{\"exception\":\"Lectura not added.\"}";
 						}
+					} else {
+						json = "{\"exception\":\"Lectura not added.\"}";						
 					}
-					json = "{\"exception\":\"Lectura not added.\"}";
 				}
 			});
 		} catch(Exception e) {
