@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import com.arquisoft.SATT.mundo.EventoSismicoDTO;
 import com.arquisoft.SATT.mundo.PuntoCardinalDTO;
@@ -40,8 +39,6 @@ public class ZoneFinderDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		EventoSismicoDTO evento = new EventoSismicoDTO(new ObjectId(), 2.743488, -78.078211, 31.2);
-		System.out.println("Ganador: " + getZonaDeEvento(evento));
 	}
 
 	public static String getZonaDeEvento(EventoSismicoDTO evento) {
