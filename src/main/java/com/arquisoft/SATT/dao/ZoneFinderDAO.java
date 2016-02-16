@@ -51,14 +51,14 @@ public class ZoneFinderDAO {
 		Collections.sort(puntosCardinales);
 		if(puntosCardinales != null) {
 			if(pcEvento.getLatitud() <= puntosCardinales.get(0).getLatitud()) {
-				if(puntosCardinales.get(0).getNombreZona1().getNombre() != null) {
+				if(puntosCardinales.get(0).getNombreZona1() != null) {
 					return puntosCardinales.get(0).getNombreZona1().getNombre();
 				} else {
 					return puntosCardinales.get(0).getNombreZona2().getNombre(); 
 				}
 			}
 			else {
-				if(puntosCardinales.get(0).getNombreZona2().getNombre() != null) {
+				if(puntosCardinales.get(0).getNombreZona2() != null) {
 					return puntosCardinales.get(0).getNombreZona2().getNombre();
 				} else {
 					return puntosCardinales.get(0).getNombreZona1().getNombre(); 
