@@ -41,7 +41,7 @@ public class SensorDAO {
 
 	public static Response getAllSensores() {
 		json = "";
-		documentos = new ArrayList<Document>();		
+		documentos = new ArrayList<Document>();
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
@@ -126,8 +126,8 @@ public class SensorDAO {
 	public static Response addSensor(SensorDTO sensor) {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
-		json = gson.toJson(sensor);
 		sensor.setNombreZona(ZoneFinderDAO.getZonaDeEvento(new EventoSismicoDTO(null, sensor.getLat(), sensor.getLng(), 0)));
+		json = gson.toJson(sensor);
 		try {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
 				@Override
