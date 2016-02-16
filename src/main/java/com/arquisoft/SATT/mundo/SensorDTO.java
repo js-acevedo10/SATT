@@ -25,6 +25,8 @@ public class SensorDTO {
 	
 	private double velocidad;
 	
+	public String nombreZona;
+	
 	private ArrayList<Document> historial = new ArrayList<Document>();
 	
 	public SensorDTO(){
@@ -52,6 +54,10 @@ public class SensorDTO {
 		this._id = _id;
 	}
 
+	public String getNombreZona() {
+		return nombreZona;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -74,6 +80,10 @@ public class SensorDTO {
 	
 	public ArrayList<Document> getHistorial() {
 		return historial;
+	}
+	
+	public void setNombreZona(String nombreZona) {
+		this.nombreZona = nombreZona;
 	}
 	
 	public void setHistorial(ArrayList<Document> historial) {

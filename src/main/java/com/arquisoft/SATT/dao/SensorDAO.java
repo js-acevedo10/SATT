@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 
+import com.arquisoft.SATT.mundo.EventoSismicoDTO;
 import com.arquisoft.SATT.mundo.SensorDTO;
 import com.arquisoft.SATT.utilidades.KeyValueSearch;
 import com.arquisoft.SATT.utilidades.MongoConnection;
@@ -52,7 +53,6 @@ public class SensorDAO {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
 		}
-		
 		return ResponseSATT.buildResponse(json);
 	}
 	
@@ -125,6 +125,7 @@ public class SensorDAO {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
 		json = gson.toJson(sensor);
+		sensor.setNombreZona(ZoneFinderDAO.getZonaDeEvento(new EventoSismicoDTO(null, sensor.getLat(), sensor.getLng(), 0)));
 		try {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
 				@Override

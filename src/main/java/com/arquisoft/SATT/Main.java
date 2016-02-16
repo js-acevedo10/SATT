@@ -1,6 +1,7 @@
 
 package com.arquisoft.SATT;
 
+import com.arquisoft.SATT.dao.ZoneFinderDAO;
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class Main {
         
         System.out.println("Starting grizzly...");
         SelectorThread threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
-//        ZoneFinderDAO.loadPuntosCardinales();
+        ZoneFinderDAO.loadPuntosCardinales();
         System.out.println(String.format("Jersey started with WADL available at %sapplication.wadl.",baseUri, baseUri));
 	}
 }
