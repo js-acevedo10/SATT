@@ -27,6 +27,8 @@ public class SensorDAO {
 	
 	private static String json;
 	
+	private static Response.Status status = Response.Status.ACCEPTED;
+	
 	private static final String COLECCION = "sensores";
 	
 	private static ArrayList<Document> documentos = new ArrayList<Document>();
@@ -48,14 +50,21 @@ public class SensorDAO {
 				@Override
 				public void query(MongoManager manager) {
 					documentos = manager.queryByFilters(COLECCION, null).into(new ArrayList<Document>());
-					json = JSON.serialize(documentos);
+					if(documentos != null && !documentos.isEmpty()) {						
+						json = JSON.serialize(documentos);
+						status = Response.Status.OK;
+					} else {
+						status = Response.Status.NOT_FOUND;
+						json = "{\"exception\":\"no sensores found.\"}";
+					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 	
 	
@@ -91,14 +100,21 @@ public class SensorDAO {
 					ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
 					filters.add(new KeyValueSearch("_id", id, SearchType.ID));
 					Document sensorDoc = manager.queryByFilters(COLECCION, filters).first();
-					json = sensorDoc.toJson();
+					if(sensorDoc != null) {
+						json = sensorDoc.toJson();
+						status = Response.Status.OK;
+					} else {
+						json = "{\"exception\":\"Sensor not found.\"}";
+						status = Response.Status.NOT_FOUND;
+					}
 				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 	
 	public static SensorDTO getSensor(String id){
@@ -137,16 +153,19 @@ public class SensorDAO {
 					Document sensorDoc = Document.parse(json);
 					if(manager.persist(sensorDoc, COLECCION)) {
 						json = sensorDoc.toJson();
+						status = Response.Status.OK;
 					} else {
 						json = "{\"exception\":\"Sensor not added.\"}";
+						status = Response.Status.NOT_MODIFIED;
 					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 
 	//----------------------------------------------------------------------
@@ -171,19 +190,23 @@ public class SensorDAO {
 						updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensorDoc.getDouble("altura")).append("velocidad", sensorDoc.getDouble("velocidad")), UpdateType.INSERT));
 						if(manager.updateFirst(COLECCION, filters, updates)) {
 							json = "{\"exception\":\"Lectura added correctly.\"}";
+							status = Response.Status.OK;
 						} else {
 							json = "{\"exception\":\"Lectura not added.\"}";
+							status = Response.Status.NOT_MODIFIED;
 						}
 					} else {
-						json = "{\"exception\":\"Lectura not added.\"}";						
+						json = "{\"exception\":\"Lectura not added.\"}";
+						status = Response.Status.NOT_MODIFIED;
 					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 	
 	public static void main(String[] args) {

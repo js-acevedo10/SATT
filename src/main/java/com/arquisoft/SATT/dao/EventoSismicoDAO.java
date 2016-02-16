@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
-
 import org.bson.Document;
 
 import com.arquisoft.SATT.mundo.AlertaDTO;
@@ -25,6 +24,8 @@ public class EventoSismicoDAO {
 	
 	private static String json;
 	
+	private static Response.Status status = Response.Status.ACCEPTED;
+	
 	private static final String COLECCION = "eventos";
 	
 	public static ArrayList<Document> documentos = new ArrayList<Document>();
@@ -43,18 +44,23 @@ public class EventoSismicoDAO {
 				@Override
 				public void query(MongoManager manager) {
 					documentos = manager.queryByFilters(COLECCION, null).into(new ArrayList<Document>());
-					if (documentos!=null && !documentos.isEmpty())
+					if (documentos!=null && !documentos.isEmpty()) {						
 						json = JSON.serialize(documentos);
-					else
+						status = Response.Status.OK;
+					}
+					else {
 						json = "{\"exception\":\"No eventos found.\"}";
+						status = Response.Status.NOT_FOUND;
+					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Eventos Collection.\"}";
+			status= Response.Status.INTERNAL_SERVER_ERROR;
 		}
 		
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 	
 	//----------------------------------------------------------------------
@@ -83,14 +89,17 @@ public class EventoSismicoDAO {
 					Document eventoDoc = Document.parse(json);
 					if(manager.persist(eventoDoc, COLECCION)) {
 						json = eventoDoc.toJson();
+						status = Response.Status.OK;
 					} else {
 						json = "{\"exception\":\"Evento not added.\"}";
+						status = Response.Status.NOT_MODIFIED;
 					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Eventos Collection.\"}";
+			status= Response.Status.INTERNAL_SERVER_ERROR;
 		}
 		
 //		System.out.println("Guarda el evento en: "+(System.currentTimeMillis()-time));
@@ -137,7 +146,7 @@ public class EventoSismicoDAO {
 		}
 //		System.out.println("Crea la alerta e inicia el thread en: "+(System.currentTimeMillis()-time));
 
-		return ResponseSATT.buildResponse(gson.toJson(alertaSaved));
+		return ResponseSATT.buildResponse(gson.toJson(alertaSaved), status);
 
 	}
 

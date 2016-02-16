@@ -31,8 +31,8 @@ public class ResponseSATT {
 	 * @param respuesta - el objeto que se vaya a enviar (debe ser String, JSON o un objeto anotado con JAX-RS)
 	 * @return la respuesta lista para ser enviada
 	 */
-	public static Response buildResponse(Object respuesta) {
-		return Response.ok()
+	public static Response buildResponse(Object respuesta, Response.Status status) {
+		return Response.status(status)
 				.entity(respuesta)
 				.header("Access-Control-Allow-Headers", HEADERS)
 				.header("Access-Control-Allow-Origin", ORIGIN)

@@ -23,6 +23,8 @@ public class AlertaDAO {
 	
 	private static String json;
 	
+	private static Response.Status status = Response.Status.ACCEPTED;
+	
 	private static final String COLECCION = "alertas";
 	
 	public static ArrayList<Document> documentos = new ArrayList<Document>();
@@ -42,15 +44,22 @@ public class AlertaDAO {
 				@Override
 				public void query(MongoManager manager) {
 					documentos = manager.queryByFilters(COLECCION, null).into(new ArrayList<Document>());
-					json = JSON.serialize(documentos);
+					if(documentos != null && !documentos.isEmpty()) {
+						json = JSON.serialize(documentos);
+						status = Response.Status.OK;
+					} else {
+						json = "{\"exception\":\"No alertas found.\"}";
+						status = Response.Status.NOT_FOUND;
+					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Alertas Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
 		
-		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(json, status);
 	}
 	
 	//----------------------------------------------------------------------
@@ -74,15 +83,17 @@ public class AlertaDAO {
 						alertaDTO.setPerfil(alertaDoc.getString("perfil"));
 						alertaDTO.settLlegada((long)alertaDoc.getInteger("tLlegada"));
 						alertaDTO.setZona(alertaDoc.getString("zona"));
-
+						status = Response.Status.OK;
 					} else {
 						json = "{\"exception\":\"Alerta not added.\"}";
+						status = Response.Status.NOT_MODIFIED;
 					}
 				}
 			});
 		} catch(Exception e) {
 			e.printStackTrace();
 			json = "{\"exception\":\"Error Fetching Alertas Collection.\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
 		return alertaDTO;
 	}
