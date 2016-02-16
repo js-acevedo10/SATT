@@ -71,6 +71,7 @@ public class EventoSismicoDAO {
 		/////////////////////////////////
 		//Persistencia del evento sismico
 		/////////////////////////////////
+//		long time = System.currentTimeMillis();
 		
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
@@ -92,25 +93,33 @@ public class EventoSismicoDAO {
 			json = "{\"exception\":\"Error Fetching Eventos Collection.\"}";
 		}
 		
+//		System.out.println("Guarda el evento en: "+(System.currentTimeMillis()-time));
+//		time = System.currentTimeMillis();
+		
+		String zona = ZoneFinderDAO.getZonaDeEvento(evento);
+//		System.out.println("Encuentra la zona en: "+(System.currentTimeMillis()-time));
+//		time = System.currentTimeMillis();
 		/////////////////////////////////
 		//Buscar sensor mas cercano
 		/////////////////////////////////
-		List<Object> sensores = SensorDAO.getListSensores();
+		List<Object> sensores = SensorDAO.getListSensores(zona);
+//		System.out.println("Recupera los sensores de Mongo en: "+(System.currentTimeMillis()-time));
+//		time = System.currentTimeMillis();
 		SensorDTO s = buscarSensorMasCercano(evento.getLat(), evento.getLng(), sensores );
-		
-		
+//		System.out.println("Busca el sensor en: "+(System.currentTimeMillis()-time));
+//		time = System.currentTimeMillis();
 		/////////////////////////////////
 		//Buscar zona correspondiente al sensor mas cercano
 		/////////////////////////////////
 		
-		String zona = ZoneFinderDAO.getZonaDeEvento(evento);
 		
 		/////////////////////////////////
 		//Comparar datos con Escenario Premodelado
 		/////////////////////////////////		
 		
 		Double altura = s.getAltura();
-		Double distancia = Math.abs(evento.getDistancia()-GeoAsistant.getDistanceBetween(evento.getLat(), evento.getLng(), s.getLat(), s.getLng()));
+//		Double distancia = Math.abs(evento.getDistancia()-GeoAsistant.getDistanceBetween(evento.getLat(), evento.getLng(), s.getLat(), s.getLng()));
+		Double distancia = evento.getDistancia();
 		Long tiempo =  (long) ((distancia/ s.getVelocidad())*3600*1000);
 		String perfil = EscenarioPremodeladoDAO.getPerfilAlerta(altura, distancia, zona);
 		
@@ -126,16 +135,10 @@ public class EventoSismicoDAO {
 			Thread nuevaAlerta = new Thread(new ControlAlarmas(s.getId(), alertaSaved.getId(), s.getAltura(), distancia, zona));
 			nuevaAlerta.start();
 		}
-		
-		return ResponseSATT.buildResponse(new Gson().toJson(alertaSaved));
+//		System.out.println("Crea la alerta e inicia el thread en: "+(System.currentTimeMillis()-time));
 
-		/////////////////////////////////
-		//Crear Alerta, persistirla y retornarla
-		/////////////////////////////////	
-		
-		//TODO Soto hace este metodo
-		
-//		return ResponseSATT.buildResponse(json);
+		return ResponseSATT.buildResponse(gson.toJson(alertaSaved));
+
 	}
 
 	//TODO Soto hace este metodo

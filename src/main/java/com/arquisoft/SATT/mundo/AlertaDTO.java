@@ -67,7 +67,7 @@ public class AlertaDTO {
 		this.zona = zona;
 	}
 
-	public long gettLlegada() {
+	public Number gettLlegada() {
 		return tLlegada;
 	}
 

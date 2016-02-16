@@ -59,7 +59,7 @@ public class SensorDAO {
 	}
 	
 	
-	public static List<Object> getListSensores() {
+	public static List<Object> getListSensores(String zona) {
 		json = "";
 		documentos = new ArrayList<Document>();		
 		MongoConnection connection = SATTDB.requestConecction();
@@ -67,7 +67,9 @@ public class SensorDAO {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
 				@Override
 				public void query(MongoManager manager) {
-					documentos = manager.queryByFilters(COLECCION, null).into(new ArrayList<Document>());
+					ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
+					filters.add(new KeyValueSearch("nombreZona", zona, SearchType.EQUALS));
+					documentos = manager.queryByFilters(COLECCION, filters).into(new ArrayList<Document>());
 					listaSensores = ResponseSATT.transformDocumentList(documentos, SensorDTO.class);
 				}
 			});

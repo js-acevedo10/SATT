@@ -40,7 +40,11 @@ public class EscenarioPremodeladoDAO {
 
 					Document perfilDoc = manager.queryByFilters(COLECCION, filters).first();
 
-					perfil = perfilDoc.getString("perfil");
+					if (perfilDoc==null){
+						perfil = PerfilAlerta.informativo.getName();
+					}else{
+						perfil = perfilDoc.getString("perfil");
+					}
 				}
 			});
 		} catch (Exception e) {

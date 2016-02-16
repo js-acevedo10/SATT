@@ -12,6 +12,8 @@ import com.arquisoft.SATT.utilidades.MongoConnection.MongoQuery;
 public class SATTDB {
 
 	private static SATTDB captain = null;
+	private static MongoConnection connection = null;
+	private static MongoManager mongo = null;
 	private static int connectionIDs = 0;
 	
 	/**
@@ -28,10 +30,12 @@ public class SATTDB {
 	 * @return La conexión creada.
 	 */
 	public static MongoConnection requestConecction(){
-		if (captain == null) captain = new SATTDB();
-		MongoManager mongo = captain.createMongoManager();
-		MongoConnection connection = new MongoConnection(mongo, ++connectionIDs);
-		connection.start();
+		if (captain == null||mongo==null||connection==null){ 
+			captain = new SATTDB();
+			mongo = captain.createMongoManager();
+			connection = new MongoConnection(mongo, ++connectionIDs);
+			connection.start();
+		}
 		return connection;
 	}
 

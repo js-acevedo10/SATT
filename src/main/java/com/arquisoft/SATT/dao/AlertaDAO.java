@@ -66,9 +66,15 @@ public class AlertaDAO {
 				@Override
 				public void query(MongoManager manager) {
 					Document alertaDoc = Document.parse(json);
-					if(manager.persist(alertaDoc, COLECCION)) {
-						json = alertaDoc.toJson();
-						alertaDTO = new Gson().fromJson(json, AlertaDTO.class);
+					if(manager.persist(alertaDoc, COLECCION)) {						
+						alertaDTO = new AlertaDTO();
+						alertaDTO.set_id(alertaDoc.getObjectId("_id"));
+						alertaDTO.setId(alertaDoc.getObjectId("_id").toHexString());
+						alertaDTO.setAltura(alertaDoc.getDouble("altura"));
+						alertaDTO.setPerfil(alertaDoc.getString("perfil"));
+						alertaDTO.settLlegada((long)alertaDoc.getInteger("tLlegada"));
+						alertaDTO.setZona(alertaDoc.getString("zona"));
+
 					} else {
 						json = "{\"exception\":\"Alerta not added.\"}";
 					}

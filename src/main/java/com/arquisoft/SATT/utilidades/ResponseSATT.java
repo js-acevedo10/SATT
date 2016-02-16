@@ -49,8 +49,8 @@ public class ResponseSATT {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static List<Object> transformDocumentList(List<Document> documentos, Class c) {
 		List<Object> rta = new ArrayList<Object>();
+		Gson gson = new Gson();
 		for (Document document : documentos) {
-			Gson gson = new Gson();
 			String json = document.toJson();
 			Object o = gson.fromJson(json, c);
 			rta.add(o);
