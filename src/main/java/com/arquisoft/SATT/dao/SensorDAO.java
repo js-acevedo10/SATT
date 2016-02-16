@@ -1,5 +1,7 @@
 package com.arquisoft.SATT.dao;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,16 +176,29 @@ public class SensorDAO {
 		return ResponseSATT.buildResponse(json);
 	}
 	
-//	public static void main(String[] args) {
-//		int i=0;
-//		while (i<4000){
-//			SensorDTO sensor = new SensorDTO();
-//			sensor.setAltura(altura);
-//			sensor.setLat(lat);
-//			sensor.setLng(lng);
-//			sensor.setVelocidad(velocidad);
-//			i++;
-//		}
-//	}
+	public static void main(String[] args) {
+		int i=0;
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("./data/sensores.csv"));
+			String line = br.readLine();
+			while (i<3){
+				SensorDTO sensor = new SensorDTO();
+				line = br.readLine();
+				String[] values = line.split(",");
+				sensor.setLat(Double.parseDouble(values[0]));
+				sensor.setLng(Double.parseDouble(values[1]));
+				sensor.setAltura(Double.parseDouble(values[2]));
+				sensor.setVelocidad(Double.parseDouble(values[3]));
+				i++;
+				SensorDAO.addSensor(sensor);
+				System.out.println("Added sensor "+i);
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }
