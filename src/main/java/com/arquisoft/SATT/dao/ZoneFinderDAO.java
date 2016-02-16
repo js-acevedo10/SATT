@@ -39,29 +39,32 @@ public class ZoneFinderDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		EventoSismicoDTO e = new EventoSismicoDTO(null, 12.225,-74.864,5.0);
+		System.out.println(getZonaDeEvento(e));
 	}
 
 	public static String getZonaDeEvento(EventoSismicoDTO evento) {
 		PuntoCardinalDTO pcEvento = new PuntoCardinalDTO(null, null, evento.getLat(), evento.getLng());
-		String x = null;
 		for (PuntoCardinalDTO puntoCardinal : puntosCardinales) {
 			puntoCardinal.setDistancia(GeoAsistant.getDistanceBetween(puntoCardinal.getLatitud(), puntoCardinal.getLongitud(), pcEvento.getLatitud(), pcEvento.getLongitud()));
 		}
 		Collections.sort(puntosCardinales);
 		if(puntosCardinales != null) {
 			if(pcEvento.getLatitud() <= puntosCardinales.get(0).getLatitud()) {
-				x = puntosCardinales.get(0).getNombreZona1().getNombre();
-				if(x == null) {
-					x = puntosCardinales.get(0).getNombreZona2().getNombre();
+				if(puntosCardinales.get(0).getNombreZona1().getNombre() != null) {
+					return puntosCardinales.get(0).getNombreZona1().getNombre();
+				} else {
+					return puntosCardinales.get(0).getNombreZona2().getNombre(); 
 				}
 			}
 			else {
-				x =  puntosCardinales.get(0).getNombreZona2().getNombre();
-				if(x == null) {
-					x = puntosCardinales.get(0).getNombreZona1().getNombre();
+				if(puntosCardinales.get(0).getNombreZona2().getNombre() != null) {
+					return puntosCardinales.get(0).getNombreZona2().getNombre();
+				} else {
+					return puntosCardinales.get(0).getNombreZona1().getNombre(); 
 				}
 			}			
 		}
-		return x;
+		return null;
 	}
 }
