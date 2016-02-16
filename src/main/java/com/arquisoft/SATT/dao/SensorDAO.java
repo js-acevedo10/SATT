@@ -180,9 +180,10 @@ public class SensorDAO {
 		int i=0;
 		
 		try {
+			ZoneFinderDAO.loadPuntosCardinales();
 			BufferedReader br = new BufferedReader(new FileReader("./data/sensores.csv"));
 			String line = br.readLine();
-			while (i<3){
+			while (i<4000){
 				SensorDTO sensor = new SensorDTO();
 				line = br.readLine();
 				String[] values = line.split(",");
