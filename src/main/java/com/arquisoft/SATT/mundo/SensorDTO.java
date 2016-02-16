@@ -1,9 +1,12 @@
 package com.arquisoft.SATT.mundo;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 @XmlRootElement
@@ -22,6 +25,8 @@ public class SensorDTO {
 	
 	private double velocidad;
 	
+	private ArrayList<Document> historial = new ArrayList<Document>();
+	
 	public SensorDTO(){
 		
 	}
@@ -33,6 +38,10 @@ public class SensorDTO {
 		this.lng = lng;
 		this.altura = altura;
 		this.velocidad = velocidad;
+	}
+	
+	public void addDocToHistorial(Document doc) {
+		historial.add(doc);
 	}
 
 	public ObjectId get_id() {
@@ -55,15 +64,23 @@ public class SensorDTO {
 		return lat;
 	}
 
-	public void setLat(long lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
 	public double getLng() {
 		return lng;
 	}
+	
+	public ArrayList<Document> getHistorial() {
+		return historial;
+	}
+	
+	public void setHistorial(ArrayList<Document> historial) {
+		this.historial = historial;
+	}
 
-	public void setLng(long lng) {
+	public void setLng(double lng) {
 		this.lng = lng;
 	}
 

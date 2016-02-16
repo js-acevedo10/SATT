@@ -14,6 +14,8 @@ import com.arquisoft.SATT.utilidades.MongoManager;
 import com.arquisoft.SATT.utilidades.ResponseSATT;
 import com.arquisoft.SATT.utilidades.SATTDB;
 import com.arquisoft.SATT.utilidades.KeyValueSearch.SearchType;
+import com.arquisoft.SATT.utilidades.KeyValueUpdate;
+import com.arquisoft.SATT.utilidades.KeyValueUpdate.UpdateType;
 import com.arquisoft.SATT.utilidades.MongoConnection.MongoQuery;
 import com.google.gson.Gson;
 import com.mongodb.util.JSON;
@@ -75,6 +77,26 @@ public class SensorDAO {
 		return listaSensores;
 	}
 	
+	public static Response getSensorJson(String id){
+		MongoConnection connection = SATTDB.requestConecction();
+		try {
+			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
+				
+				@Override
+				public void query(MongoManager manager) {
+					ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
+					filters.add(new KeyValueSearch("_id", id, SearchType.ID));
+					Document sensorDoc = manager.queryByFilters(COLECCION, filters).first();
+					json = sensorDoc.toJson();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+		}
+		return ResponseSATT.buildResponse(json);
+	}
+	
 	public static SensorDTO getSensor(String id){
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
@@ -92,7 +114,6 @@ public class SensorDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return sensor;
 	}
 	
@@ -113,6 +134,35 @@ public class SensorDAO {
 						json = sensorDoc.toJson();
 					} else {
 						json = "{\"exception\":\"Sensor not added.\"}";
+					}
+				}
+			});
+		} catch(Exception e) {
+			e.printStackTrace();
+			json = "{\"exception\":\"Error Fetching Sensores Collection.\"}";
+		}
+		return ResponseSATT.buildResponse(json);
+	}
+
+	//----------------------------------------------------------------------
+	//PUT
+	//----------------------------------------------------------------------
+	
+	public static Response addLecturaToSensor(SensorDTO sensor) {
+		MongoConnection connection = SATTDB.requestConecction();
+		try {
+			ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
+			filters.add(new KeyValueSearch("lat", sensor.getLat(), SearchType.EQUALS));
+			filters.add(new KeyValueSearch("lng", sensor.getLng(),SearchType.EQUALS));
+			ArrayList<KeyValueUpdate> updates = new ArrayList<KeyValueUpdate>();
+			updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensor.getAltura()).append("velocidad", sensor.getVelocidad()), UpdateType.INSERT));
+			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
+				@Override
+				public void query(MongoManager manager) {
+					if(manager.updateFirst(COLECCION, filters, updates)) {
+						json = "{\"exception\":\"Lectura added.\"}";
+					} else {
+						json = "{\"exception\":\"Lectura not added.\"}";
 					}
 				}
 			});
