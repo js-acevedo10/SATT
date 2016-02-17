@@ -6,9 +6,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoOptions;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -30,11 +28,8 @@ public class MongoManager {
 	 * @return La base de datos en Mongo para buscar.
 	 */
 	private static MongoDatabase initMongoDB(){
-		if (mongo==null || URI == null || db == null){
-			MongoClientOptions options = MongoClientOptions.builder()
-				    .connectionsPerHost(1000)
-				    .build();
-			URI  = new MongoClientURI(DBURI, new MongoClientOptions.Builder(options)); 
+		if (mongo==null || URI == null || db == null){ 
+			URI  = new MongoClientURI(DBURI); 
 			mongo = new MongoClient(URI);
 			db = mongo.getDatabase(URI.getDatabase());
 		}
