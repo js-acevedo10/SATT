@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.arquisoft.SATT.mundo.EventoSismicoDTO;
 import com.arquisoft.SATT.mundo.SensorDTO;
@@ -187,7 +188,7 @@ public class SensorDAO {
 					if(sensorDoc != null) {
 						updates.add(new KeyValueUpdate("altura", sensor.getAltura(), UpdateType.SET));
 						updates.add(new KeyValueUpdate("velocidad", sensor.getVelocidad(), UpdateType.SET));
-						updates.add(new KeyValueUpdate("historial", new Document().append("altura", sensorDoc.getDouble("altura")).append("velocidad", sensorDoc.getDouble("velocidad")), UpdateType.INSERT));
+						updates.add(new KeyValueUpdate("historial", new Document().append("_id", new ObjectId()).append("altura", sensorDoc.getDouble("altura")).append("velocidad", sensorDoc.getDouble("velocidad")), UpdateType.INSERT));
 						if(manager.updateFirst(COLECCION, filters, updates)) {
 							json = "{\"exception\":\"Lectura added correctly.\"}";
 							status = Response.Status.OK;
