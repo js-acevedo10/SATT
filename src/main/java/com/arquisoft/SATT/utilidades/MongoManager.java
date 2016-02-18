@@ -6,7 +6,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
@@ -30,7 +29,7 @@ public class MongoManager {
 	 */
 	private static MongoDatabase initMongoDB(){
 		if (mongo==null || URI == null || db == null){ 
-			URI  = new MongoClientURI(DBURI, MongoClientOptions.builder().connectionsPerHost(500)); 
+			URI  = new MongoClientURI(DBURI); 
 			mongo = new MongoClient(URI);
 			db = mongo.getDatabase(URI.getDatabase());
 		}
