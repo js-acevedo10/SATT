@@ -1,24 +1,53 @@
 
 package com.arquisoft.SATT;
 
-import com.arquisoft.SATT.dao.ZoneFinderDAO;
-import com.sun.grizzly.http.SelectorThread;
-import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
+import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
+import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URI;
+
+import javax.ws.rs.core.UriBuilder;
+
+import org.glassfish.grizzly.http.server.HttpServer;
 
 public class Main {
-	@SuppressWarnings("unused")
-	public static void main(String[] args) throws IOException {
-		final String baseUri = "http://localhost:"+(System.getenv("PORT")!=null?System.getenv("PORT"):"9998")+"/";
-        final Map<String, String> initParams = new HashMap<String, String>();
+	private static URI getBaseURI(String hostname, int port) {
+        return UriBuilder.fromUri("http://0.0.0.0/").port(port).build();
+    }
 
-        initParams.put("com.sun.jersey.config.property.packages","com.arquisoft.SATT.recursos");
-        
+    protected static HttpServer startServer(URI uri) throws IOException {
         System.out.println("Starting grizzly...");
-        SelectorThread threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
-        ZoneFinderDAO.loadPuntosCardinales();
-        System.out.println(String.format("Jersey started with WADL available at %sapplication.wadl.",baseUri, baseUri));
-	}
+        ResourceConfig rc = new PackagesResourceConfig("com.arquisoft.SATT.recursos");
+        return GrizzlyServerFactory.createHttpServer(uri, rc);
+    }
+
+    public static void main(String[] args) throws IOException {
+        String hostname = System.getenv("HOSTNAME");
+        if (hostname == null) {
+            hostname = "localhost";
+        }
+
+        boolean isOnLocal = false;
+        String port = System.getenv("PORT");
+        if (port == null) {
+            isOnLocal = true;
+            port = "9999";
+        }
+
+        URI uri = getBaseURI(hostname, Integer.valueOf(port));
+
+        HttpServer httpServer = startServer(uri);
+        System.out.println(String.format("Jersey app started with WADL available at "
+                + "%sapplication.wadl\nHit enter to stop it...", uri, uri));
+        if (isOnLocal) {
+            System.in.read();
+            httpServer.stop();
+        } else {
+            while (true) {
+                System.in.read();
+            }
+        }
+    }
 }
