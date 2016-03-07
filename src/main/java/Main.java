@@ -7,18 +7,17 @@ import com.sun.jersey.api.core.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 
-public class Main {
-	public static final String BASE_URI = "http://localhost:8080/myapp/";
+import javax.ws.rs.core.UriBuilder;
 
-    protected static HttpServer startServer() throws IOException {
+public class Main {
+	private static URI getBaseURI(String hostname, int port) {
+        return UriBuilder.fromUri("http://" + hostname + "/").port(port).build();
+    }
+
+    protected static HttpServer startServer(URI uri) throws IOException {
         System.out.println("Starting grizzly...");
-<<<<<<< HEAD
-        ResourceConfig rc = new ResourceConfig().packages("recursos");
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
-=======
         ResourceConfig rc = new PackagesResourceConfig("recursos");
         return GrizzlyServerFactory.createHttpServer(uri, rc);
->>>>>>> parent of 3b024a5... Updated to jersey 2
     }
 
     public static void main(String[] args) throws IOException {
@@ -31,18 +30,14 @@ public class Main {
         String port = System.getenv("PORT");
         if (port == null) {
             isOnLocal = true;
-            port = "9998";
+            port = "9999";
         }
 
-<<<<<<< HEAD
-        final HttpServer httpServer = startServer();
-=======
         URI uri = getBaseURI(hostname, Integer.valueOf(port));
 
         HttpServer httpServer = startServer(uri);
->>>>>>> parent of 3b024a5... Updated to jersey 2
         System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+                + "%sapplication.wadl\nHit enter to stop it...", uri, uri));
         if (isOnLocal) {
             System.in.read();
             httpServer.stop();
