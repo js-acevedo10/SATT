@@ -11,7 +11,7 @@ import javax.ws.rs.core.UriBuilder;
 
 public class Main {
 	private static URI getBaseURI(String hostname, int port) {
-        return UriBuilder.fromUri("http://" + hostname + "/").port(port).build();
+        return UriBuilder.fromUri("http://0.0.0.0/").port(port).build();
     }
 
     protected static HttpServer startServer(URI uri) throws IOException {
@@ -30,7 +30,7 @@ public class Main {
         String port = System.getenv("PORT");
         if (port == null) {
             isOnLocal = true;
-            port = "9999";
+            port = "9998";
         }
 
         URI uri = getBaseURI(hostname, Integer.valueOf(port));
