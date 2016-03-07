@@ -1,8 +1,6 @@
 import org.glassfish.grizzly.http.server.HttpServer;
-
-import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.api.core.ResourceConfig;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,8 +14,8 @@ public class Main {
 
     protected static HttpServer startServer(URI uri) throws IOException {
         System.out.println("Starting grizzly...");
-        ResourceConfig rc = new PackagesResourceConfig("recursos");
-        return GrizzlyServerFactory.createHttpServer(uri, rc);
+        ResourceConfig rc = new ResourceConfig().packages("recursos");
+        return GrizzlyHttpServerFactory.createHttpServer(uri, rc);
     }
 
     public static void main(String[] args) throws IOException {
@@ -35,12 +33,12 @@ public class Main {
 
         URI uri = getBaseURI(hostname, Integer.valueOf(port));
 
-        HttpServer httpServer = startServer(uri);
+        final HttpServer httpServer = startServer(uri);
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", uri, uri));
         if (isOnLocal) {
             System.in.read();
-            httpServer.stop();
+            httpServer.shutdown();
         } else {
             while (true) {
                 System.in.read();
