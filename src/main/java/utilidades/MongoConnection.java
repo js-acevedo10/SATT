@@ -2,6 +2,8 @@ package utilidades;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
+import com.sun.jersey.server.impl.uri.rules.TerminatingRule;
+
 public class MongoConnection extends Thread implements Runnable {
 	
 	/**
