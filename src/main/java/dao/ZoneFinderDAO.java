@@ -18,6 +18,8 @@ public class ZoneFinderDAO {
 	
 	public final static String COLECCION = "puntos-cardinales";
 	
+	public static boolean loaded = false;
+	
 	private static ArrayList<PuntoCardinalDTO> puntosCardinales = new ArrayList<PuntoCardinalDTO>();
 
 	public static void loadPuntosCardinales() {
@@ -39,11 +41,15 @@ public class ZoneFinderDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		loaded = true;
 		EventoSismicoDTO e = new EventoSismicoDTO(null, 12.225,-74.864,5.0);
 		System.out.println(getZonaDeEvento(e));
 	}
 
 	public static String getZonaDeEvento(EventoSismicoDTO evento) {
+		if(!loaded) {
+			loadPuntosCardinales();
+		}
 		PuntoCardinalDTO pcEvento = new PuntoCardinalDTO(null, null, evento.getLat(), evento.getLng());
 		for (PuntoCardinalDTO puntoCardinal : puntosCardinales) {
 			puntoCardinal.setDistancia(GeoAsistant.getDistanceBetween(puntoCardinal.getLatitud(), puntoCardinal.getLongitud(), pcEvento.getLatitud(), pcEvento.getLongitud()));
