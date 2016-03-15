@@ -30,7 +30,7 @@ public class MongoManager {
 	 */
 	private static MongoDatabase initMongoDB(){
 		if (mongo==null || URI == null || db == null){ 
-			URI  = new MongoClientURI(DBURI, MongoClientOptions.builder().minConnectionsPerHost(20).connectionsPerHost(20)); 
+			URI  = new MongoClientURI(DBURI, MongoClientOptions.builder().minConnectionsPerHost(0).connectionsPerHost(20)); 
 			mongo = new MongoClient(URI);
 			db = mongo.getDatabase(URI.getDatabase());
 		}
