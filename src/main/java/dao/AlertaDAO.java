@@ -77,7 +77,14 @@ public class AlertaDAO {
 					Document alt = manager.queryByFilters(COLECCION, filters).first();
 					if(alt != null) {
 						Gson gson = new Gson();
-						AlertaDTO alerta = gson.fromJson(alt.toJson(), AlertaDTO.class);
+						AlertaDTO alerta = new AlertaDTO();
+						alertaDTO = new AlertaDTO();
+						alertaDTO.set_id(alt.getObjectId("_id"));
+						alertaDTO.setId(alt.getObjectId("_id").toHexString());
+						alertaDTO.setAltura(alt.getDouble("altura"));
+						alertaDTO.setPerfil(alt.getString("perfil"));
+						alertaDTO.settLlegada((long)alt.getInteger("tLlegada"));
+						alertaDTO.setZona(alt.getString("zona"));
 						
 						json = gson.toJson(alerta);
 						status = Response.Status.OK;
