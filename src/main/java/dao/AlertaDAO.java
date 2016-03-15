@@ -78,13 +78,13 @@ public class AlertaDAO {
 					if(alt != null) {
 						Gson gson = new Gson();
 						AlertaDTO alerta = new AlertaDTO();
-						alertaDTO = new AlertaDTO();
-						alertaDTO.set_id(alt.getObjectId("_id"));
-						alertaDTO.setId(alt.getObjectId("_id").toHexString());
-						alertaDTO.setAltura(alt.getDouble("altura"));
-						alertaDTO.setPerfil(alt.getString("perfil"));
-						alertaDTO.settLlegada((long)alt.getInteger("tLlegada"));
-						alertaDTO.setZona(alt.getString("zona"));
+						alerta = new AlertaDTO();
+						alerta.set_id(alt.getObjectId("_id"));
+						alerta.setId(alt.getObjectId("_id").toHexString());
+						alerta.setAltura(alt.getDouble("altura"));
+						alerta.setPerfil(alt.getString("perfil"));
+						alerta.settLlegada((long)alt.getInteger("tLlegada"));
+						alerta.setZona(alt.getString("zona"));
 						
 						json = gson.toJson(alerta);
 						status = Response.Status.OK;
