@@ -71,10 +71,10 @@ public class MongoManager {
 					break;
 				}
 			}
-			results = initMongoDB().getCollection(COLECCION).find(jsonFilters);
+			results = MongoManager.initMongoDB().getCollection(COLECCION).find(jsonFilters);
 		}
 		else{
-			results = initMongoDB().getCollection(COLECCION).find();
+			results = MongoManager.initMongoDB().getCollection(COLECCION).find();
 		}
 
 		return results;
@@ -88,7 +88,7 @@ public class MongoManager {
 	 * @return Si se guardó con éxito.
 	 */
 	public boolean persist(Document document, String COLECCION){
-		initMongoDB().getCollection(COLECCION).insertOne(document);
+		MongoManager.initMongoDB().getCollection(COLECCION).insertOne(document);
 		return true;
 	}
 
@@ -126,13 +126,13 @@ public class MongoManager {
 				}
 			}
 			if (deleteOne){
-				deleted = initMongoDB().getCollection(collection).deleteOne(jsonFilters);
+				deleted = MongoManager.initMongoDB().getCollection(collection).deleteOne(jsonFilters);
 				if (deleted.getDeletedCount()>0){
 					return true;
 				}
 			}
 			else{
-				deleted = initMongoDB().getCollection(collection).deleteMany(jsonFilters);
+				deleted = MongoManager.initMongoDB().getCollection(collection).deleteMany(jsonFilters);
 				if (deleted.getDeletedCount()>0){
 					return true;
 				}
@@ -175,7 +175,7 @@ public class MongoManager {
 					break;
 				}
 			}
-			deleted = initMongoDB().getCollection(collection).deleteOne(jsonFilters);
+			deleted = MongoManager.initMongoDB().getCollection(collection).deleteOne(jsonFilters);
 			if (deleted.getDeletedCount()>0){
 				return true;
 			}
@@ -272,7 +272,7 @@ public class MongoManager {
 				jsonUpdates.append("$set", jsonSets);
 			}
 
-			result = initMongoDB().getCollection(collection).updateMany(jsonFilters, jsonUpdates);
+			result = MongoManager.initMongoDB().getCollection(collection).updateMany(jsonFilters, jsonUpdates);
 			if (result.getModifiedCount()>0){
 				return true;
 			}
@@ -367,7 +367,7 @@ public class MongoManager {
 				jsonUpdates.append("$set", jsonSets);
 			}
 
-			result = initMongoDB().getCollection(COLECCION).updateOne(jsonFilters, jsonUpdates);
+			result = MongoManager.initMongoDB().getCollection(COLECCION).updateOne(jsonFilters, jsonUpdates);
 			if (result.getModifiedCount()>0){
 				return true;
 			}
@@ -489,7 +489,7 @@ public class MongoManager {
 			}
 
 			jsonFilters.append(arrayName, new Document("$elemMatch", jsonInArrayFilters));
-			result = initMongoDB().getCollection(COLECCION).updateMany(jsonFilters, jsonUpdates);
+			result = MongoManager.initMongoDB().getCollection(COLECCION).updateMany(jsonFilters, jsonUpdates);
 			if (result.getModifiedCount()>0){
 				return true;
 			}
@@ -559,7 +559,7 @@ public class MongoManager {
 
 		}
 
-		result = initMongoDB().getCollection(COLECCION).updateMany(jsonFilters, new Document("$pull", jsonInArrayFilters));
+		result = MongoManager.initMongoDB().getCollection(COLECCION).updateMany(jsonFilters, new Document("$pull", jsonInArrayFilters));
 		if (result.getModifiedCount()>0){
 			return true;
 		}
