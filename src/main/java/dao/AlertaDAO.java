@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -20,17 +21,17 @@ import com.google.gson.Gson;
 import com.mongodb.util.JSON;
 
 public class AlertaDAO {
-	
+
 	private static String json;
-	
+
 	private static Response.Status status = Response.Status.ACCEPTED;
-	
+
 	private static final String COLECCION = "alertas";
-	
+
 	public static ArrayList<Document> documentos = new ArrayList<Document>();
-	
+
 	private static AlertaDTO alertaDTO = null;
-	
+
 	//----------------------------------------------------------------------
 	//GET
 	//----------------------------------------------------------------------
@@ -58,14 +59,47 @@ public class AlertaDAO {
 			json = "{\"exception\":\"Error Fetching Alertas Collection.\"}";
 			status = Response.Status.INTERNAL_SERVER_ERROR;
 		}
-		
+
 		return ResponseSATT.buildResponse(json, status);
 	}
-	
+
+	public static Response getAlerta(String id){
+		json = "";
+		MongoConnection connection = SATTDB.requestConecction();
+		try {
+			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public void query(MongoManager manager) {
+					ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
+					KeyValueSearch kvs = new KeyValueSearch("_id", id, SearchType.ID);
+					filters.add(kvs);
+					Document alt = manager.queryByFilters(COLECCION, filters).first();
+					if(alt != null) {
+						Gson gson = new Gson();
+//						AlertaDTO alerta = gson.fromJson(alt.toJson(), AlertaDTO.class);
+						
+						json = alt.toJson();
+						status = Response.Status.OK;
+					} else {
+						json = "{\"exception\":\"Error Fetching Alerta with ID: " + id + ".\"}";
+						status = Response.Status.NOT_FOUND;
+					}
+				}
+			});
+		} catch(Exception e) {
+			e.printStackTrace();
+			json = "{\"exception\":\"Error Fetching FBO with ID: " + id + ".\"}";
+			status = Response.Status.INTERNAL_SERVER_ERROR;
+		}
+		return ResponseSATT.buildResponse(json, status);
+
+	}
+
 	//----------------------------------------------------------------------
 	//POST
 	//----------------------------------------------------------------------
-	
+
 	public static AlertaDTO addAlerta(AlertaDTO alerta) {
 		MongoConnection connection = SATTDB.requestConecction();
 		Gson gson = new Gson();
@@ -97,29 +131,29 @@ public class AlertaDAO {
 		}
 		return alertaDTO;
 	}
-	
+
 	public static void updateAlerta(String id, String perfil, double altura){
 		MongoConnection connection = SATTDB.requestConecction();
 		try {
 			SATTDB.executeQueryWithConnection(connection, new MongoQuery() {
-				
+
 				@Override
 				public void query(MongoManager manager) {
 					ArrayList<KeyValueSearch> filters = new ArrayList<KeyValueSearch>();
 					ArrayList<KeyValueUpdate> updates = new ArrayList<KeyValueUpdate>();
-					
+
 					filters.add(new KeyValueSearch("_id", id, SearchType.ID));
 					updates.add(new KeyValueUpdate("altura", altura, UpdateType.SET));
 					if(manager.updateFirst(COLECCION, filters, updates)){
-//						alerta = new Gson().fromJson(manager.queryByFilters(COLECCION, filters).first().toJson(), AlertaDTO.class);
+						//						alerta = new Gson().fromJson(manager.queryByFilters(COLECCION, filters).first().toJson(), AlertaDTO.class);
 					}
 				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-//		return alerta;
+
+		//		return alerta;
 	}
 
 }
