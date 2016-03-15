@@ -77,9 +77,9 @@ public class AlertaDAO {
 					Document alt = manager.queryByFilters(COLECCION, filters).first();
 					if(alt != null) {
 						Gson gson = new Gson();
-//						AlertaDTO alerta = gson.fromJson(alt.toJson(), AlertaDTO.class);
+						AlertaDTO alerta = gson.fromJson(alt.toJson(), AlertaDTO.class);
 						
-						json = alt.toJson();
+						json = gson.toJson(alerta);
 						status = Response.Status.OK;
 					} else {
 						json = "{\"exception\":\"Error Fetching Alerta with ID: " + id + ".\"}";
