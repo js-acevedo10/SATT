@@ -1,4 +1,4 @@
-package persistencia;
+package utilidades;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
-import persistencia.KeyValueSearch.SearchType;
+import utilidades.KeyValueSearch.SearchType;
 
 public class MongoManager {
 

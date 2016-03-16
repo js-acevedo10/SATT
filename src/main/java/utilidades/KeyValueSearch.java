@@ -1,4 +1,4 @@
-package persistencia;
+package utilidades;
 
 /**
  * Clase para empaquetar las parejas de valores de JSON para una búsqueda en Mongo

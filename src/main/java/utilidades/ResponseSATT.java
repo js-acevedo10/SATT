@@ -1,4 +1,4 @@
-package persistencia;
+package utilidades;
 
 import java.util.ArrayList;
 import java.util.List;
