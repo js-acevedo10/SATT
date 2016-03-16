@@ -1,4 +1,4 @@
-package mundo;
+package logica;
 
 public enum Zona {
 	
