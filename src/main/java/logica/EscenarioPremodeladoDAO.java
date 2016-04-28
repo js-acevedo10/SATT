@@ -1,4 +1,4 @@
-package dao;
+package logica;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,14 +8,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import org.bson.Document;
 
-import mundo.Zona;
-import mundo.EscenarioPremodelado.PerfilAlerta;
-import utilidades.KeyValueSearch;
-import utilidades.KeyValueSearch.SearchType;
-import utilidades.MongoConnection;
-import utilidades.MongoConnection.MongoQuery;
-import utilidades.MongoManager;
-import utilidades.SATTDB;
+import logica.EscenarioPremodelado.PerfilAlerta;
+import persistencia.KeyValueSearch;
+import persistencia.MongoConnection;
+import persistencia.MongoManager;
+import persistencia.SATTDB;
+import persistencia.KeyValueSearch.SearchType;
+import persistencia.MongoConnection.MongoQuery;
 
 public class EscenarioPremodeladoDAO {
 

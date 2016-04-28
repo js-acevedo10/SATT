@@ -1,6 +1,6 @@
-package utilidades;
+package persistencia;
 
-import utilidades.MongoConnection.MongoQuery;
+import persistencia.MongoConnection.MongoQuery;
 
 /**
  * CaptainDB es la clase de acceso a Mongo. Es el puerto entre el programador y Mongo. 

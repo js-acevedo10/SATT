@@ -1,4 +1,4 @@
-package utilidades;
+package persistencia;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,12 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
-import utilidades.KeyValueSearch.SearchType;
+import persistencia.KeyValueSearch.SearchType;
 
 public class MongoManager {
 
 	private static final String DBURI = System.getenv("PROD_MONGODB");
+	private static final String DBURI_RECOVERY = System.getenv("PROD_MONGODB_RECOVERY");
 
 	private static MongoClient mongo = null;
 	private static MongoClientURI URI = null;
@@ -32,7 +33,17 @@ public class MongoManager {
 		if (mongo==null || URI == null || db == null){ 
 			URI  = new MongoClientURI(DBURI, MongoClientOptions.builder().minConnectionsPerHost(2).connectionsPerHost(5)); 
 			mongo = new MongoClient(URI);
-			db = mongo.getDatabase(URI.getDatabase());
+			try{
+				db = mongo.getDatabase(URI.getDatabase());
+			}catch (Exception e){
+				mongo.close();
+				URI = null;
+				
+				URI  = new MongoClientURI(DBURI_RECOVERY, MongoClientOptions.builder().minConnectionsPerHost(2).connectionsPerHost(5)); 
+				mongo = new MongoClient(URI);
+				db = mongo.getDatabase(URI.getDatabase());
+			}
+			
 		}
 		return db;
 	}

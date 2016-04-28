@@ -1,4 +1,4 @@
-package dao;
+package logica;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,19 +6,17 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import org.bson.Document;
 
-import mundo.AlertaDTO;
-import mundo.ControlAlarmas;
-import mundo.EscenarioPremodelado.PerfilAlerta;
-import mundo.EventoSismicoDTO;
-import mundo.SensorDTO;
-import utilidades.GeoAsistant;
-import utilidades.MongoConnection;
-import utilidades.MongoManager;
-import utilidades.ResponseSATT;
-import utilidades.SATTDB;
-import utilidades.MongoConnection.MongoQuery;
+import persistencia.GeoAsistant;
+import persistencia.MongoConnection;
+import persistencia.MongoManager;
+import persistencia.ResponseSATT;
+import persistencia.SATTDB;
+import persistencia.MongoConnection.MongoQuery;
+
 import com.google.gson.Gson;
 import com.mongodb.util.JSON;
+
+import logica.EscenarioPremodelado.PerfilAlerta;
 
 public class EventoSismicoDAO {
 	

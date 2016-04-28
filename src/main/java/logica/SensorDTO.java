@@ -1,4 +1,4 @@
-package mundo;
+package logica;
 
 import java.util.ArrayList;
 

@@ -1,17 +1,16 @@
-package dao;
+package logica;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.bson.Document;
 
-import mundo.EventoSismicoDTO;
-import mundo.PuntoCardinalDTO;
-import utilidades.GeoAsistant;
-import utilidades.MongoConnection;
-import utilidades.MongoConnection.MongoQuery;
-import utilidades.MongoManager;
-import utilidades.SATTDB;
+import persistencia.GeoAsistant;
+import persistencia.MongoConnection;
+import persistencia.MongoManager;
+import persistencia.SATTDB;
+import persistencia.MongoConnection.MongoQuery;
+
 import com.google.gson.Gson;
 
 public class ZoneFinderDAO {

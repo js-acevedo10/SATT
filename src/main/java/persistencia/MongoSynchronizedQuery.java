@@ -1,7 +1,7 @@
-package utilidades;
+package persistencia;
 
-import utilidades.SATTDB.QueryPriority;
-import utilidades.MongoConnection.MongoBackgroudQuery;
+import persistencia.MongoConnection.MongoBackgroudQuery;
+import persistencia.SATTDB.QueryPriority;
 
 /**
  * Clase que maneja se incorpora en una cola de tareas con prioridad.

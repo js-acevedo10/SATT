@@ -1,9 +1,6 @@
-package mundo;
+package logica;
 
-import dao.AlertaDAO;
-import dao.EscenarioPremodeladoDAO;
-import dao.SensorDAO;
-import mundo.EscenarioPremodelado.PerfilAlerta;
+import logica.EscenarioPremodelado.PerfilAlerta;
 
 public class ControlAlarmas implements Runnable{
 
