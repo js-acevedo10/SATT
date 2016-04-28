@@ -1,43 +1,40 @@
 
-package servicios;
+package recursos;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import logica.EventoSismicoDAO;
-import logica.EventoSismicoDTO;
-import security.Roles;
+import dao.AlertaDAO;
 
-// The Java class will be hosted at the URI path "/eventos"
-@Path("/eventos")
-public class EventoSismicoResource {
+// The Java class will be hosted at the URI path "/alertas"
+@Path("/alertas")
+public class AlertaResource {
+	
 
 	//----------------------------------------------------------------------
 	//GET
 	//----------------------------------------------------------------------
 	
-	@RolesAllowed(Roles.ADMIN)
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllEventos() {
-		return EventoSismicoDAO.getAllEventos();
+	public Response getAllAlertas() {
+		return AlertaDAO.getAllAlertas();
+	}
+	
+	@GET
+	@Path("/{idAlerta}/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAlertaID(@PathParam("idAlerta") String idAlerta){
+		return AlertaDAO.getAlerta(idAlerta);
 	}
 
 	//----------------------------------------------------------------------
 	//POST
 	//----------------------------------------------------------------------
-	
-	@RolesAllowed(Roles.USUARIO)
-	@POST 
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response createEvento(EventoSismicoDTO evento) {
-		return EventoSismicoDAO.addEvento( evento );
-	}
 	
 	//----------------------------------------------------------------------
 	//PUT
